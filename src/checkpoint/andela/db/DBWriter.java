@@ -31,8 +31,12 @@ public class DBWriter extends checkpoint.andela.model.DatabaseConfig {
   }
 
   public void insertIntoDatabase (HashMap<String, String> dataToInsertInDatabase ){
-
-
+    if(!queryDatabase.hasTable(TABLE_NAME)) {
+      queryDatabase.createTable(TABLE_NAME);
+      queryDatabase.insertIntoDatabase(TABLE_NAME, dataToInsertInDatabase);
+    } else {
+      queryDatabase.insertIntoDatabase(TABLE_NAME, dataToInsertInDatabase);
+    }
   }
 
 }
