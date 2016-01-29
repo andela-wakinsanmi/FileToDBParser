@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * Created by Spykins on 28/01/2016.
  */
-public class DBWriter extends checkpoint.andela.db.DatabaseConfig {
+public class DBWriter extends checkpoint.andela.model.DatabaseConfig {
   private Connection databaseConnection;
   private QueryDatabase queryDatabase;
   private DataAndLogBuffer dataAndLogBuffer;
