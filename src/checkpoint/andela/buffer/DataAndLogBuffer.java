@@ -24,27 +24,46 @@ public class DataAndLogBuffer {
   }
 
   public void addItemToDataBuffer(HashMap<String, String> itemToAddToBuffer){
+    try {
+      bufferUsedToStoreData.put(itemToAddToBuffer);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
   }
 
   public void removeItemFromDataBuffer(){
-
+    try {
+      bufferUsedToStoreData.take();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   public void addItemToLogBuffer(String logToAdd){
+    try {
+      bufferUsedToStoreLogInfo.put(logToAdd);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
   }
 
   public void removeItemFromLogBuffer(){
+    try {
+      bufferUsedToStoreLogInfo.take();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
   }
 
   public ArrayBlockingQueue<String> getBufferUsedToStoreLogInfo(){
-    return null;
+    return bufferUsedToStoreLogInfo;
   }
 
   public ArrayBlockingQueue<HashMap<String, String>> getBufferUsedToStoreData(){
-    return null;
+    return bufferUsedToStoreData;
   }
 
 }
