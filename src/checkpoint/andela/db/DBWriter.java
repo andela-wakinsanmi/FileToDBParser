@@ -22,7 +22,9 @@ public class DBWriter extends checkpoint.andela.model.DatabaseConfig {
 
   private void initialize(){
     try {
-      databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DATABASE_NAME, DATABASE_USER_NAME, DATABASE_PASSWORD);
+      databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" +
+          DATABASE_NAME, DATABASE_USER_NAME, DATABASE_PASSWORD);
+      queryDatabase = new QueryDatabase(databaseConnection);
     } catch (SQLException e) {
       e.printStackTrace();
     }
