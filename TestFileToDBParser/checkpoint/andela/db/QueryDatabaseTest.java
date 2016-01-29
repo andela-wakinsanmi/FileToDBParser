@@ -48,6 +48,28 @@ public class QueryDatabaseTest extends DatabaseConfig{
     queryDatabase.deleteTableFromDatabase(tableName);
   }
 
+  @Test
+  public void testDeleteTableFromDatabase() throws Exception{
+    initialize();
+    if(!queryDatabase.hasTable(tableName)){
+      queryDatabase.createTable(tableName);
+    }
+    assertTrue(queryDatabase.deleteTableFromDatabase(tableName));
+  }
+
+  @Test
+  public void testHasTable() throws Exception {
+    initialize();
+    if (queryDatabase.hasTable(tableName)){
+      assertTrue(queryDatabase.hasTable(tableName));
+    } else {
+      assertFalse(queryDatabase.hasTable(tableName));
+      queryDatabase.createTable(tableName);
+      assertTrue(queryDatabase.hasTable(tableName));
+    }
+    queryDatabase.deleteTableFromDatabase(tableName);
+  }
+
   private void initialize(){
     try {
         databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" +
