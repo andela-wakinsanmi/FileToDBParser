@@ -8,7 +8,7 @@ import java.io.*;
 /**
  * Created by Spykins on 28/01/2016.
  */
-public class LogWriter {
+public class LogWriter implements Runnable {
   private String filePath;
   private DataAndLogBuffer dataAndLogBuffer;
   private FileWriter fileWriter;
@@ -44,5 +44,11 @@ public class LogWriter {
       e.printStackTrace();
     }
   }
-  
+
+  @Override
+  public void run() {
+    while (dataAndLogBuffer.hasDataToRead()){
+      writeToLogger(dataAndLogBuffer.removeItemFromLogBuffer());
+    }
+  }
 }

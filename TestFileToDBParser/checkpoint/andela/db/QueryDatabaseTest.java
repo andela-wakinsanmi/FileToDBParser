@@ -25,6 +25,9 @@ public class QueryDatabaseTest extends DatabaseConfig{
   @Test
   public void testCreateTable() throws Exception {
     initialize();
+    if(queryDatabase.hasTable(tableName)){
+      queryDatabase.deleteTableFromDatabase(tableName);
+    }
     assertFalse(queryDatabase.hasTable(tableName));
     assertTrue(queryDatabase.createTable(tableName));
     assertTrue(queryDatabase.hasTable(tableName));
