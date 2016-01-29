@@ -7,4 +7,5 @@ public abstract class DatabaseConfig {
   protected final String DATABASE_USER_NAME = "root";
   protected final String DATABASE_PASSWORD = "oluronti20";
   protected final String DATABASE_NAME = "reactiondb";
+  protected final String TABLE_NAME = "reactions";
 }
