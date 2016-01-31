@@ -72,7 +72,7 @@ public class DataAndLogBuffer {
       logData = "DBWriter Thread " + dateFormat.format(date) + " ---- collected UNIQUE ID " +
           dataToLog.get("UNIQUE-ID") + " from buffer";
     } else {
-      logData = "FileParser Thread " + dateFormat.format(date) + " ---- collected UNIQUE ID " +
+      logData = "FileParser Thread " + dateFormat.format(date) + " ---- wrote UNIQUE ID " +
           dataToLog.get("UNIQUE-ID") + " from buffer";
     }
     addItemToLogBuffer(logData);
@@ -80,7 +80,6 @@ public class DataAndLogBuffer {
 
   public void addItemToLogBuffer(String logToAdd){
     try {
-      System.out.println("Called here " + bufferUsedToStoreLogInfo.size() + " ");
       bufferUsedToStoreLogInfo.put(logToAdd);
     } catch (InterruptedException e) {
       e.printStackTrace();

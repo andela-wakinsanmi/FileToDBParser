@@ -1,6 +1,7 @@
 package checkpoint.andela.db;
 
 import checkpoint.andela.buffer.DataAndLogBuffer;
+import checkpoint.andela.model.DatabaseConfig;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 /**
  * Created by Spykins on 28/01/2016.
  */
-public class DBWriter extends checkpoint.andela.model.DatabaseConfig implements Runnable {
+public class DBWriter implements Runnable {
   private Connection databaseConnection;
   private QueryDatabase queryDatabase;
   private DataAndLogBuffer dataAndLogBuffer;
@@ -24,7 +25,8 @@ public class DBWriter extends checkpoint.andela.model.DatabaseConfig implements 
     dataAndLogBuffer = DataAndLogBuffer.getInstance();
     try {
       databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" +
-          DATABASE_NAME, DATABASE_USER_NAME, DATABASE_PASSWORD);
+          DatabaseConfig.DATABASE_NAME.getGetRealName(), DatabaseConfig.DATABASE_USER_NAME.getGetRealName(),
+          DatabaseConfig.DATABASE_PASSWORD.getGetRealName());
       queryDatabase = new QueryDatabase(databaseConnection);
     } catch (SQLException e) {
       e.printStackTrace();
@@ -32,11 +34,11 @@ public class DBWriter extends checkpoint.andela.model.DatabaseConfig implements 
   }
 
   public void insertIntoDatabase (HashMap<String, String> dataToInsertInDatabase ){
-    if(!queryDatabase.hasTable(TABLE_NAME)) {
-      queryDatabase.createTable(TABLE_NAME);
-      queryDatabase.insertIntoDatabase(TABLE_NAME, dataToInsertInDatabase);
+    if(!queryDatabase.hasTable(DatabaseConfig.TABLE_NAME.getGetRealName())) {
+      queryDatabase.createTable(DatabaseConfig.TABLE_NAME.getGetRealName());
+      queryDatabase.insertIntoDatabase(DatabaseConfig.TABLE_NAME.getGetRealName(), dataToInsertInDatabase);
     } else {
-      queryDatabase.insertIntoDatabase(TABLE_NAME, dataToInsertInDatabase);
+      queryDatabase.insertIntoDatabase(DatabaseConfig.TABLE_NAME.getGetRealName(), dataToInsertInDatabase);
     }
   }
 
@@ -44,6 +46,13 @@ public class DBWriter extends checkpoint.andela.model.DatabaseConfig implements 
   public void run() {
     while (dataAndLogBuffer.hasDataToRead()){
       insertIntoDatabase(dataAndLogBuffer.removeItemFromDataBuffer());
+      if(!dataAndLogBuffer.hasDataToRead()){
+        if ((dataAndLogBuffer.getBufferUsedToStoreData().size() == 1)){
+          insertIntoDatabase(dataAndLogBuffer.removeItemFromDataBuffer());
+        }
+        break;
+      }
     }
   }
+
 }

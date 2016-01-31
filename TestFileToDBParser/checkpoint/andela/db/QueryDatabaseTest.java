@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Spykins on 29/01/2016.
  */
-public class QueryDatabaseTest extends DatabaseConfig{
+public class QueryDatabaseTest {
   QueryDatabase queryDatabase;
   Connection databaseConnection;
   String tableName = "reactions";
@@ -75,8 +75,8 @@ public class QueryDatabaseTest extends DatabaseConfig{
 
   private void initialize(){
     try {
-        databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" +
-          DATABASE_NAME, DATABASE_USER_NAME, DATABASE_PASSWORD);
+        databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DatabaseConfig.DATABASE_NAME.getGetRealName(),
+            DatabaseConfig.DATABASE_USER_NAME.getGetRealName(), DatabaseConfig.DATABASE_PASSWORD.getGetRealName());
     } catch (SQLException e) {
       e.printStackTrace();
     }

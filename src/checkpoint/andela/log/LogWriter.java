@@ -15,7 +15,6 @@ public class LogWriter implements Runnable {
   private BufferedWriter bufferedWriter;
   private PrintWriter printWriter;
 
-
   public LogWriter(String filePath){
     this.filePath = filePath;
     dataAndLogBuffer = DataAndLogBuffer.getInstance();
@@ -39,7 +38,6 @@ public class LogWriter implements Runnable {
       printWriter = new PrintWriter(bufferedWriter);
       printWriter.println(logString);
       printWriter.flush();
-      System.out.println(logString);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -47,8 +45,12 @@ public class LogWriter implements Runnable {
 
   @Override
   public void run() {
-    while (dataAndLogBuffer.hasDataToRead()){
+    while (true){
       writeToLogger(dataAndLogBuffer.removeItemFromLogBuffer());
+      if(!dataAndLogBuffer.hasDataToRead()){
+        break;
+      }
     }
   }
+
 }

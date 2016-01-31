@@ -1,5 +1,7 @@
 package checkpoint.andela.parser;
 
+import checkpoint.andela.model.FileDelimeters;
+
 import java.io.*;
 import java.util.HashMap;
 
@@ -21,7 +23,6 @@ public class ReadData {
 
   }
 
-
   public HashMap<String,String> getData(){
     HashMap<String, String> newDataToAdd = new HashMap<String, String>();
 
@@ -31,20 +32,12 @@ public class ReadData {
         if (lineFromFile == null || isTheEndOfData()) {
           break;
         }
-        //checking for comment lin that starts with /
-        if (getSplittedString(lineFromFile).length == 2) {
-          if (newDataToAdd.containsKey(getSplittedString(lineFromFile)[0])) {
-            String newValue = newDataToAdd.get(getSplittedString(lineFromFile)[0]) + "::" + getSplittedString(lineFromFile)[1];
-            newDataToAdd.put(getSplittedString(lineFromFile)[0], newValue);
 
-          } else {
-            newDataToAdd.put(getSplittedString(lineFromFile)[0], getSplittedString(lineFromFile)[1]);
-          }
+        if (getSplittedString(lineFromFile).length == 2) {
+          addLineToNewDataMap(newDataToAdd, lineFromFile);
+
         } else {
-          if (!isTheEndOfData() && newDataToAdd.containsKey("COMMENT-INTERNAL")) {
-            String oldValue = newDataToAdd.get("COMMENT-INTERNAL");
-            newDataToAdd.put("COMMENT-INTERNAL", oldValue + lineFromFile);
-          }
+          checkLineReadForComment(newDataToAdd, lineFromFile);
         }
       } catch (IOException e) {
         e.printStackTrace();
@@ -53,17 +46,30 @@ public class ReadData {
     return  newDataToAdd;
   }
 
+  private void addLineToNewDataMap(HashMap newDataToAdd, String lineFromFile){
+    if (newDataToAdd.containsKey(getSplittedString(lineFromFile)[0])) {
+      String newValue = newDataToAdd.get(getSplittedString(lineFromFile)[0]) +
+          "::" + getSplittedString(lineFromFile)[1];
+      newDataToAdd.put(getSplittedString(lineFromFile)[0], newValue);
 
-  private String[] getSplittedString(String presentLineRead){
-    return presentLineRead.split(" - ", 2);
+    } else {
+      newDataToAdd.put(getSplittedString(lineFromFile)[0], getSplittedString(lineFromFile)[1]);
+    }
   }
 
-  private boolean isTheBeginingOfData() {
-    return lineFromFile.charAt(0) != '#';
+  private void checkLineReadForComment(HashMap<String, String> newDataToAdd, String lineFromFile){
+    if (!isTheEndOfData() && newDataToAdd.containsKey("COMMENT-INTERNAL")) {
+      String oldValue = newDataToAdd.get("COMMENT-INTERNAL");
+      newDataToAdd.put("COMMENT-INTERNAL", oldValue + lineFromFile);
+    }
+  }
+
+  private String[] getSplittedString(String presentLineRead){
+    return presentLineRead.split(FileDelimeters.KEY_VALUE_SEPARATOR.getRealName(), 2);
   }
 
   private boolean isTheEndOfData(){
-    return lineFromFile.equals("//");
+    return lineFromFile.equals(FileDelimeters.END_OF_DATA.getRealName());
   }
 
 
