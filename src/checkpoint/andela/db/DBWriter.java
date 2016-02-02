@@ -24,9 +24,9 @@ public class DBWriter implements Runnable {
   private void initialize(){
     dataAndLogBuffer = DataAndLogBuffer.getInstance();
     try {
-      databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" +
-          DatabaseConfig.DATABASE_NAME.getGetRealName(), DatabaseConfig.DATABASE_USER_NAME.getGetRealName(),
-          DatabaseConfig.DATABASE_PASSWORD.getGetRealName());
+      databaseConnection = DriverManager.getConnection(DatabaseConfig.DATABASE_TYPE.getRealName() +
+          DatabaseConfig.DATABASE_NAME.getRealName(), DatabaseConfig.DATABASE_USER_NAME.getRealName(),
+          DatabaseConfig.DATABASE_PASSWORD.getRealName());
       queryDatabase = new QueryDatabase(databaseConnection);
     } catch (SQLException e) {
       e.printStackTrace();
@@ -34,11 +34,11 @@ public class DBWriter implements Runnable {
   }
 
   public void insertIntoDatabase (HashMap<String, String> dataToInsertInDatabase ){
-    if(!queryDatabase.hasTable(DatabaseConfig.TABLE_NAME.getGetRealName())) {
-      queryDatabase.createTable(DatabaseConfig.TABLE_NAME.getGetRealName());
-      queryDatabase.insertIntoDatabase(DatabaseConfig.TABLE_NAME.getGetRealName(), dataToInsertInDatabase);
+    if(!queryDatabase.hasTable(DatabaseConfig.TABLE_NAME.getRealName())) {
+      queryDatabase.createTable(DatabaseConfig.TABLE_NAME.getRealName());
+      queryDatabase.insertIntoDatabase(DatabaseConfig.TABLE_NAME.getRealName(), dataToInsertInDatabase);
     } else {
-      queryDatabase.insertIntoDatabase(DatabaseConfig.TABLE_NAME.getGetRealName(), dataToInsertInDatabase);
+      queryDatabase.insertIntoDatabase(DatabaseConfig.TABLE_NAME.getRealName(), dataToInsertInDatabase);
     }
   }
 

@@ -1,19 +1,24 @@
 package checkpoint.andela.parser;
 
+/**
+ * Created by Spykins on 01/02/2016.
+ */
+
+
 import checkpoint.andela.model.FileDelimeters;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 
-/**
- * Created by Spykins on 28/01/2016.
- */
-public class ReadData {
+public class DataReader {
   BufferedReader bufferedReader;
   String lineFromFile;
   FileReader fileReader;
 
-  public ReadData(String pathToFile){
+  public DataReader(String pathToFile){
     try {
       fileReader = new FileReader(pathToFile);
       bufferedReader = new BufferedReader(fileReader);
@@ -74,3 +79,4 @@ public class ReadData {
 
 
 }
+

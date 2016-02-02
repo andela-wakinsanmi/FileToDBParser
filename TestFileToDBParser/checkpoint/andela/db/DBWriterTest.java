@@ -1,6 +1,6 @@
 package checkpoint.andela.db;
 
-import checkpoint.andela.parser.ReadData;
+import checkpoint.andela.parser.DataReader;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class DBWriterTest {
   DBWriter dbWriter = new DBWriter();
-  ReadData readData = new ReadData("/Users/Spykins/IdeaProjects/FileToDBParser/res/reactions.dat");
+  DataReader readData = new DataReader("/Users/Spykins/IdeaProjects/FileToDBParser/res/reactions.dat");
 
 
   @Test

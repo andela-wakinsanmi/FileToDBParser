@@ -8,16 +8,12 @@ import java.util.HashMap;
  * Created by Spykins on 28/01/2016.
  */
 public class FileParser implements Runnable {
-  ReadData readData;
-  DataAndLogBuffer dataAndLogBuffer;
+  private DataReader readData;
+  private DataAndLogBuffer dataAndLogBuffer;
 
   public FileParser(String filePath){
-    readData = new ReadData(filePath);
+    readData = new DataReader(filePath);
     dataAndLogBuffer = dataAndLogBuffer.getInstance();
-  }
-
-  public HashMap<String,String> fetchDataFromFile(){
-    return readData.getData();
   }
 
   @Override

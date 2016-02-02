@@ -12,6 +12,6 @@ public class DatabaseConfigTest {
 
   @Test
   public void testGetGetRealName() throws Exception {
-    assertTrue(DatabaseConfig.DATABASE_NAME.getGetRealName().equals("reactiondb"));
+    assertTrue(DatabaseConfig.DATABASE_NAME.getRealName().equals("reactiondb"));
   }
 }

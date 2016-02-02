@@ -1,17 +1,18 @@
 package checkpoint.andela.parser;
 
+import org.junit.Test;
+
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by Spykins on 28/01/2016.
+ * Created by Spykins on 01/02/2016.
  */
-public class ReadDataTest {
-  ReadData readData = new ReadData("/Users/Spykins/IdeaProjects/FileToDBParser/res/reactions.dat");
+public class DataReaderTest {
+  DataReader readData = new DataReader("/Users/Spykins/IdeaProjects/FileToDBParser/res/reactions.dat");
 
-  @org.junit.Test
+  @Test
   public void testGetData() throws Exception {
     HashMap<String, String> returnedValue = readData.getData();
     assertFalse(returnedValue.isEmpty());

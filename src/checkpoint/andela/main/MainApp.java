@@ -8,7 +8,7 @@ import checkpoint.andela.parser.FileParser;
  * Created by Spykins on 29/01/2016.
  */
 public class MainApp {
-  String filePath;
+  private String filePath;
 
   public MainApp(String filePath){
     this.filePath = filePath;

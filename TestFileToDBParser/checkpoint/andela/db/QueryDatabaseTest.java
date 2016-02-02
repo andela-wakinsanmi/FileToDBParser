@@ -2,7 +2,7 @@ package checkpoint.andela.db;
 
 import checkpoint.andela.model.DatabaseConfig;
 import checkpoint.andela.model.InputFieldModel;
-import checkpoint.andela.parser.ReadData;
+import checkpoint.andela.parser.DataReader;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class QueryDatabaseTest {
   QueryDatabase queryDatabase;
   Connection databaseConnection;
   String tableName = "reactions";
-  ReadData readData = new ReadData("/Users/Spykins/IdeaProjects/FileToDBParser/res/reactions.dat");
+  DataReader readData = new DataReader("/Users/Spykins/IdeaProjects/FileToDBParser/res/reactions.dat");
 
   @Test
   public void testCreateTable() throws Exception {
@@ -75,8 +75,8 @@ public class QueryDatabaseTest {
 
   private void initialize(){
     try {
-        databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DatabaseConfig.DATABASE_NAME.getGetRealName(),
-            DatabaseConfig.DATABASE_USER_NAME.getGetRealName(), DatabaseConfig.DATABASE_PASSWORD.getGetRealName());
+        databaseConnection = DriverManager.getConnection(DatabaseConfig.DATABASE_TYPE.getRealName() + DatabaseConfig.DATABASE_NAME.getRealName(),
+            DatabaseConfig.DATABASE_USER_NAME.getRealName(), DatabaseConfig.DATABASE_PASSWORD.getRealName());
     } catch (SQLException e) {
       e.printStackTrace();
     }

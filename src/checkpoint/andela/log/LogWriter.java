@@ -20,6 +20,11 @@ public class LogWriter implements Runnable {
     dataAndLogBuffer = DataAndLogBuffer.getInstance();
   }
 
+  /**
+   * Writes the String from the Log Buffer into the file
+   * @param logString in the String to Log to fly
+   */
+
   public void writeToLogger(String logString){
     int index = filePath.lastIndexOf("/");
     filePath = filePath.substring(0,index) + "/logger.txt";

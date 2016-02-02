@@ -13,8 +13,6 @@ public class DataAndLogBuffer {
   private static ArrayBlockingQueue<String> bufferUsedToStoreLogInfo;
   private static ArrayBlockingQueue<HashMap<String, String>> bufferUsedToStoreData;
   private static DataAndLogBuffer dataAndLogBuffer = null;
-  private final int ADD_ITEM_TO_BUFFER_CODE = 1;
-  private final int REMOVE_ITEM_FROM_BUFFER_CODE = 0;
   private boolean isDataAvailable = true;
   private static boolean firstThread = true;
 
@@ -40,22 +38,30 @@ public class DataAndLogBuffer {
     return dataAndLogBuffer;
   }
 
+  /**
+   * Add Item to the DataBuffer, The FileParser Thread uses this Method to add item into the Buffer
+   * @param itemToAddToBuffer of data parsed from FileParser method: initializeFileParser()
+   * @return void
+   */
   public void addItemToDataBuffer(HashMap<String, String> itemToAddToBuffer){
-    //fileParser Thread Domain
     try {
       bufferUsedToStoreData.put(itemToAddToBuffer);
-      constructLog(ADD_ITEM_TO_BUFFER_CODE, itemToAddToBuffer);
+      constructLog(itemToAddToBuffer,"FileParser", "Wrote", "to");
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
 
   }
 
+  /**
+   * Removes item from DataBuffer
+   * @return void
+   */
+
   public HashMap<String, String> removeItemFromDataBuffer(){
-    //DBWriter Thread Domain
     try {
       HashMap<String, String> dataToRemove = bufferUsedToStoreData.take();
-      constructLog(REMOVE_ITEM_FROM_BUFFER_CODE, dataToRemove);
+      constructLog(dataToRemove, "DBWriter", "collected", "from");
       return dataToRemove ;
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -63,18 +69,11 @@ public class DataAndLogBuffer {
     return null;
   }
 
-  private void constructLog(int value, HashMap<String, String> dataToLog){
+  private void constructLog(HashMap<String, String> dataToLog, String threadName, String appendName, String preposition){
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Date date = new Date();
-    String logData;
-
-    if(value == REMOVE_ITEM_FROM_BUFFER_CODE){
-      logData = "DBWriter Thread " + dateFormat.format(date) + " ---- collected UNIQUE ID " +
-          dataToLog.get("UNIQUE-ID") + " from buffer";
-    } else {
-      logData = "FileParser Thread " + dateFormat.format(date) + " ---- wrote UNIQUE ID " +
-          dataToLog.get("UNIQUE-ID") + " from buffer";
-    }
+    String logData = threadName + " " + dateFormat.format(date) + " ---- " + appendName + " " + "UNIQUE ID " +
+          dataToLog.get("UNIQUE-ID") + preposition + " buffer";
     addItemToLogBuffer(logData);
   }
 
