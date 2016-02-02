@@ -22,7 +22,7 @@ File To DB Parser is a multi-thread program that reads data from a reaction file
 	UNIQUE-ID - 6-PHOSPHO-BETA-GALACTOSIDASE-RXN
 	TYPES - Small-Molecule-Reactions
 	TYPES - Chemical-Reactions
-	ATOM-MAPPINGS - (:NO-HYDROGEN-ENCODING (0 1 2 3 4 5 6 7 8 16 11 10 12 13 14 15 17 9) (((CPD-1241 0 15) (|	LEFT - |6-Phospho-b-D-galactosides|
+	ATOM-MAPPINGS - (:NO-HYDROGEN-ENCODING (0 1 2 3 4 5 6 7 8 16 11 10 12 13 14 15 17 9) (((CPD-1241 0 15)
 	LEFT - WATER
 	PHYSIOLOGICALLY-RELEVANT? - T
 	RIGHT - CPD-1241
@@ -165,7 +165,8 @@ QueryDatabase is the class that queries the Database. The QueryDatabase construc
 The createTable method creates table in the database if the table doesn't exist, the insertIntoDatabase method takes the table name,HashMap of the data and insert it into the database.
 
 ```java
-	Connection databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DatabaseConfig.DATABASE_NAME.getGetRealName(),
+	Connection databaseConnection = DriverManager.getConnection(DatabaseConfig.DATABASE_TYPE.getRealName() +
+	                                DatabaseConfig.DATABASE_NAME.getGetRealName(),
 	DatabaseConfig.DATABASE_USER_NAME.getGetRealName(), DatabaseConfig.DATABASE_PASSWORD.getGetRealName());
 	QueryDatabase queryDatabase = new QueryDatabase(databaseConnection);
 
