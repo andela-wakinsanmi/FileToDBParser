@@ -54,6 +54,7 @@ Client using this project has to create a MYSQL database and change the configur
   	DATABASE_PASSWORD("password"),
   	DATABASE_NAME ("reactiondb"),
   	TABLE_NAME("reactions");
+  	DATABASE_TYPE("jdbc:mysql://localhost:3306/");
 ```
 
 ###InputFieldModel

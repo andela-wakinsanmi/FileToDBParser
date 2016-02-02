@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class DataReader {
-  BufferedReader bufferedReader;
-  String lineFromFile;
-  FileReader fileReader;
+  private BufferedReader bufferedReader;
+  private String lineFromFile;
+  private FileReader fileReader;
 
   public DataReader(String pathToFile){
     try {
