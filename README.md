@@ -210,3 +210,8 @@ DataAndLogBuffer class is a Singleton class that keeps track of the data buffer 
 +  ```   public boolean hasDataToRead() ```
 +  ```   public void setDataAvailable(boolean flag) ```
 
+
+### UML Diagram
+
+![fileparser](https://cloud.githubusercontent.com/assets/16117695/15604127/610df3d2-23f6-11e6-81ed-5343c97774a2.png)
+
